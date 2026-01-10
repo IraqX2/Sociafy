@@ -237,7 +237,7 @@ const HomePage = () => (
         <span className="text-pink-500 italic">Brand Identity.</span>
       </h1>
       <p className="text-lg md:text-xl text-slate-500 max-w-2xl mx-auto mb-16 font-medium leading-relaxed">
-        <BanglaText>এখন আপনার পার্সোনাল আইডি বা বিজনেস পেজে লাইক, ফলোয়ার বা ভিউ নেওয়া একদম পানির মতো সহজ। ১০০% রিয়েল অথবা হাই-কোয়ালিটি বট — যা খুশি বেছে নিন।</BanglaText>
+        <BanglaText>এখন আপনার পার্সোনাল আইডি বা বিজনেস পেজে লাইক, ফলোয়ার বা ভিউ নেওয়া একদম পানির মতো সহজ। রিয়েল অথবা হাই-কোয়ালিটি বট — যা খুশি বেছে নিন।</BanglaText>
       </p>
       <div className="flex flex-col sm:flex-row justify-center gap-6">
         <Link to="/services" className="bg-slate-900 text-white px-12 py-6 rounded-full font-black uppercase tracking-widest text-xs hover:bg-pink-600 shadow-xl transition-all">
@@ -488,7 +488,7 @@ const MarketplacePage = () => {
                      rel="noopener noreferrer" 
                      className="flex items-center justify-center gap-2 text-xs font-black text-green-600 uppercase tracking-widest hover:text-green-800 transition-colors"
                    >
-                     <MessageCircle size={16} /> Chat to Order Directly
+                     <MessageCircle size={16} /> Order from Whatsapp
                    </a>
                 </div>
               </div>

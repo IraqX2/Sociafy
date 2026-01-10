@@ -22,8 +22,8 @@ export const SERVICES: Service[] = [
     unitValue: 1000,
     unitLabel: 'Real Followers',
     deliveryTime: '24-36h',
-    description: '১০০% রিয়েল আইডি থেকে ফলোয়ার। পার্সোনাল আইডি বা বিজনেস পেজের ট্রাস্ট বাড়াতে সেরা।',
-    imageUrl: 'https://images.unsplash.com/photo-1611162618071-b39a2dd7f5df?auto=format&fit=crop&q=80&w=400'
+    description: 'রিয়েল আইডি থেকে ফলোয়ার। পার্সোনাল আইডি বা বিজনেস পেজের ট্রাস্ট বাড়াতে সেরা।',
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767732848/How-to-Naturally-Get-More-Facebook-Follower_lnql5m.jpg'
   },
   {
     id: 'fb-f-1k-bot',
@@ -35,20 +35,20 @@ export const SERVICES: Service[] = [
     unitLabel: 'Bot Followers',
     deliveryTime: '12-24h',
     description: 'সল্প মূল্যে প্রোফাইল বা পেজের সংখ্যা বাড়াতে সাহায্য করে। দেখতে প্রফেশনাল।',
-    imageUrl: 'https://images.unsplash.com/photo-1611162616305-c69b3fa7fbe0?auto=format&fit=crop&q=80&w=400'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767732848/How-to-Naturally-Get-More-Facebook-Follower_lnql5m.jpg'
   },
   // Instagram
   {
     id: 'ig-f-1k',
-    name: 'IG Real Followers 1000',
+    name: 'IG Followers 1000',
     platform: 'instagram',
     category: 'followers',
     price: 250,
     unitValue: 1000,
-    unitLabel: 'Real Followers',
+    unitLabel: 'Followers',
     deliveryTime: '24h',
     description: 'অর্গানিক লুক সহ হাই কোয়ালিটি প্রোফাইল ফলোয়ার। ড্রপ হওয়ার ভয় নেই।',
-    imageUrl: 'https://images.unsplash.com/photo-1611267254323-4db7b39c732c?auto=format&fit=crop&q=80&w=400'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733641/EasyRate-Instagram-Followers_fknmwz.png'
   },
   // Facebook Views
   {
@@ -61,7 +61,7 @@ export const SERVICES: Service[] = [
     unitLabel: 'Views',
     deliveryTime: '24h',
     description: 'ফেসবুক রিলস বা ভিডিও ভিউজ। দ্রুত এনগেজমেন্ট বাড়াতে সাহায্য করবে।',
-    imageUrl: 'https://images.unsplash.com/photo-1541872703-74c5e443d1f0?auto=format&fit=crop&q=80&w=400'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733986/8d1a8336-ac1c-4d19-b1ec-a12a5c86a285.png'
   },
   // Facebook Ads
   {
@@ -74,20 +74,20 @@ export const SERVICES: Service[] = [
     unitLabel: 'Dollar ($)',
     deliveryTime: 'Instant',
     description: 'ফেসবুক অ্যাড বুস্টিং সুবিধা। ডলার প্রতি মাত্র ১৫৫ টাকা। সঠিক অডিয়েন্স টার্গেটিং।',
-    imageUrl: 'https://images.unsplash.com/photo-1557838923-2985c318be48?auto=format&fit=crop&q=80&w=400'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1768072735/aed2cca6-1842-44f1-bf1d-88b9b10b9c4e.png'
   },
   // Verification
   {
     id: 'fb-verify',
-    name: 'Buy or Renew Blue Verified Badge Facebook',
+    name: 'FaceBook Verified Badge',
     platform: 'facebook',
     category: 'verification',
     price: 1400,
     unitValue: 1,
     unitLabel: 'Month Subscription',
     deliveryTime: '7-15 Days',
-    description: 'আইডি বা পেজ ভেরিফিকেশন সার্ভিস (প্রতি মাস)। ১০০% সিকিউর ও অফিসিয়াল মেথড।',
-    imageUrl: 'https://images.unsplash.com/photo-1633332755192-727a05c4013d?auto=format&fit=crop&q=80&w=400'
+    description: 'Buy or Renew , আইডি বা পেজ ভেরিফিকেশন সার্ভিস (প্রতি মাস)। সিকিউর ও অফিসিয়াল মেথড।',
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1768072790/bcc4d2fc-3102-42e1-9004-052c517188ed.png'
   },
   {
     id: 'fb-c-100',
@@ -99,7 +99,7 @@ export const SERVICES: Service[] = [
     unitLabel: 'Custom Comments',
     deliveryTime: '24-36h',
     description: 'আপনার পছন্দমতো কাস্টম কমেন্ট। পেজের বিশ্বস্ততা বাড়ায়।',
-    imageUrl: 'https://images.unsplash.com/photo-1516321497487-e288fb19713f?auto=format&fit=crop&q=80&w=400'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733986/8d1a8336-ac1c-4d19-b1ec-a12a5c86a285.png'
   }
 ];
 
