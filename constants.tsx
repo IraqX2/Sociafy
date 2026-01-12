@@ -44,12 +44,12 @@ export const SERVICES: Service[] = [
     name: 'FB Post Reaction Service 1000',
     platform: 'facebook',
     category: 'likes',
-    price: 180,
+    price: 200,
     unitValue: 1000,
     unitLabel: 'Reactions',
     deliveryTime: '12-24h',
     description: 'আপনার ফেসবুক পোস্টের রিঅ্যাকশন (Like, Love, Wow) বাড়াতে সাহায্য করে।',
-    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733986/8d1a8336-ac1c-4d19-b1ec-a12a5c86a285.png'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1768251930/16fc55a4-f6f9-499a-bda0-9e5e380f6899.png'
   },
   // 4) fb vid Views service
   {
