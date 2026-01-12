@@ -4,10 +4,9 @@ export async function onRequestPost(context: any) {
     const data = await context.request.json();
     const { orderInfo, cart, total, paymentDetails } = data;
 
-    // Generate a unique order ID
-    const orderId = `ORD-${Math.random().toString(36).substring(2, 7).toUpperCase()}`;
+    // Generate a unique numeric order ID (5 digits)
+    const orderId = `ORD-${Math.floor(10000 + Math.random() * 90000)}`;
 
-    // Create order summary text
     const orderItems = cart.map((item: any) => `- ${item.name} (${item.quantity} units) = ${item.price * item.quantity}৳`).join('\n');
 
     const adminEmailContent = `
@@ -44,14 +43,14 @@ export async function onRequestPost(context: any) {
       Our verification team will review your payment of ${total}৳ from account ${paymentDetails.senderNumber}. 
       Once verified, your growth services will be initiated within 1-24 hours.
       
-      If you need immediate assistance, please reply to this email or reach us on WhatsApp: 01846-119500.
+      If you need immediate assistance, reach us on WhatsApp: 01846-119500.
       
       Best Regards,
       Nayeem Uddin
       Sociafy Digital Growth Architecture
     `;
 
-    // Send emails using MailChannels (Free for Cloudflare Pages)
+    // Send emails using MailChannels
     // 1. Notify Admin
     await fetch('https://api.mailchannels.net/tx/v1/send', {
       method: 'POST',
@@ -80,7 +79,6 @@ export async function onRequestPost(context: any) {
       headers: { 'Content-Type': 'application/json' },
     });
   } catch (error: any) {
-    console.error("Order Worker Error:", error);
     return new Response(JSON.stringify({ success: false, error: error.message }), {
       status: 500,
       headers: { 'Content-Type': 'application/json' },

@@ -22,7 +22,10 @@ import {
   LayoutGrid,
   CreditCard,
   Zap,
-  Star
+  Star,
+  Clock,
+  Lock,
+  Target
 } from 'lucide-react';
 import { CartItem, Service, OrderInfo, Platform } from './types';
 import { SERVICES, SOCIAFY_INFO, REVIEWS } from './constants';
@@ -131,7 +134,7 @@ const Navbar = () => {
             )}
             <Link to="/" className="flex flex-col">
               <span className="text-xl md:text-2xl font-heading font-black tracking-tighter text-slate-900 leading-none">Sociafy</span>
-              <span className="text-[8px] font-black text-pink-500 uppercase tracking-widest mt-0.5">EST. 2021</span>
+              <span className="text-[8px] font-black text-pink-500 uppercase tracking-widest mt-0.5">GROWTH ARCHITECT</span>
             </Link>
           </div>
 
@@ -139,7 +142,7 @@ const Navbar = () => {
             <Link to="/" className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all ${location.pathname === '/' ? 'text-pink-600' : 'text-slate-500 hover:text-pink-500'}`}>Home</Link>
             <Link to="/reviews" className={`text-[10px] font-black uppercase tracking-[0.2em] transition-all ${location.pathname === '/reviews' ? 'text-pink-600' : 'text-slate-500 hover:text-pink-500'}`}>Reviews</Link>
             <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="text-[10px] font-black uppercase tracking-[0.2em] flex items-center gap-2 text-green-600">
-              <MessageCircle size={14} /> WhatsApp Directly
+              <MessageCircle size={14} /> WhatsApp Support
             </a>
           </div>
 
@@ -164,7 +167,7 @@ const Navbar = () => {
           <Link to="/" onClick={() => setIsOpen(false)} className="block text-xl font-heading font-bold">Home</Link>
           <Link to="/reviews" onClick={() => setIsOpen(false)} className="block text-xl font-heading font-bold">Reviews</Link>
           <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="flex items-center gap-4 text-xl font-heading font-bold text-green-600">
-            <MessageCircle size={24} /> WhatsApp Directly
+            <MessageCircle size={24} /> WhatsApp Support
           </a>
         </div>
       )}
@@ -181,15 +184,13 @@ const PlatformIcon: React.FC<{ platform: Platform, className?: string, size?: nu
     case 'facebook': return <Facebook className={`text-[#1877F2] ${className}`} size={size} />;
     case 'instagram': return <Instagram className={`text-[#E4405F] ${className}`} size={size} />;
     case 'youtube': return <Youtube className={`text-[#FF0000] ${className}`} size={size} />;
-    case 'tiktok': return <div className="text-black font-black italic tracking-tighter" style={{fontSize: size*0.8}}>T</div>;
     default: return <LayoutGrid className={`text-slate-400 ${className}`} size={size} />;
   }
 };
 
-// --- Helper for WhatsApp link generation ---
 const generateWhatsAppLink = (cart: CartItem[], orderInfo: OrderInfo, total: number) => {
   const itemsText = cart.map(i => `- ${i.name} (${i.quantity}x)`).join('\n');
-  const message = `Assalamu Alaikum Sociafy,\nI want to place an order:\n\n*Order Details:*\n${itemsText}\n\n*Total:* ${total}৳\n\n*My Info:*\n- Name: ${orderInfo.name}\n- Mobile: ${orderInfo.mobile}\n- Email: ${orderInfo.email}\n- Target: ${orderInfo.targetLink}`;
+  const message = `Assalamu Alaikum Sociafy,\nI want to place an order:\n\n*Order Details:*\n${itemsText}\n\n*Total:* ${total}৳\n\n*My Info:*\n- Name: ${orderInfo.name}\n- Mobile: ${orderInfo.mobile}\n- Email: ${orderInfo.email}\n- Link: ${orderInfo.targetLink}`;
   return `https://wa.me/8801846119500?text=${encodeURIComponent(message)}`;
 };
 
@@ -202,7 +203,7 @@ const HomePage = () => {
     <div className="animate-in fade-in duration-700">
       <section className="pt-32 md:pt-48 pb-16 px-4 md:px-12 max-w-7xl mx-auto text-center">
         <div className="inline-block bg-pink-50 text-pink-500 px-4 py-1.5 rounded-full text-[9px] md:text-[10px] font-black uppercase tracking-[0.4em] mb-8 border border-pink-100">
-          Growth Since 2021
+          Growth Architects since 2021
         </div>
         <h1 className="text-4xl md:text-8xl lg:text-9xl font-heading font-black text-slate-900 leading-[1.1] md:leading-[0.9] tracking-tighter mb-8 md:mb-12 uppercase">
           Skyrocket Your <br/>
@@ -236,10 +237,10 @@ const HomePage = () => {
               return (
                 <div 
                   key={s.id} 
-                  className={`bg-white rounded-3xl md:rounded-[40px] border transition-all duration-300 p-5 md:p-8 flex flex-col gap-4 md:gap-6 group ${qty > 0 ? 'border-pink-500 ring-4 ring-pink-500/10 shadow-[0_15px_40px_rgba(244,114,182,0.15)] scale-[1.03]' : 'border-slate-100 hover:shadow-xl'}`}
+                  className={`bg-white rounded-3xl md:rounded-[40px] border transition-all duration-300 p-5 md:p-8 flex flex-col gap-4 md:gap-6 group ${qty > 0 ? 'border-pink-500 ring-4 ring-pink-500/10 shadow-[0_20px_50px_rgba(244,114,182,0.15)] scale-[1.03]' : 'border-slate-100 hover:shadow-xl'}`}
                 >
                   <div className="flex justify-between items-start">
-                    <div className="w-20 md:w-1/3 aspect-square rounded-2xl overflow-hidden bg-slate-50 border border-slate-100">
+                    <div className="w-20 md:w-1/3 aspect-square rounded-2xl overflow-hidden bg-slate-50 border border-slate-100 shadow-inner">
                       <img src={s.imageUrl} className="w-full h-full object-cover" alt={s.name} />
                     </div>
                     <div className={`p-2 md:p-3 rounded-xl md:rounded-2xl shadow-sm border ${qty > 0 ? 'bg-pink-50 border-pink-200' : 'bg-slate-50 border-slate-100'}`}>
@@ -262,19 +263,9 @@ const HomePage = () => {
 
                     <div className="flex items-center justify-between">
                         <div className={`flex items-center rounded-xl overflow-hidden transition-colors ${qty > 0 ? 'bg-pink-100' : 'bg-slate-100'}`}>
-                          <button 
-                            onClick={() => item && updateQuantity(item.id, qty - 1)}
-                            className="p-3 md:p-4 hover:bg-slate-200 transition-colors text-slate-600"
-                          >
-                            <Minus size={14} />
-                          </button>
+                          <button onClick={() => item && updateQuantity(item.id, qty - 1)} className="p-3 md:p-4 hover:bg-slate-200 transition-colors text-slate-600"><Minus size={14} /></button>
                           <span className="w-8 md:w-10 text-center font-heading font-black text-base md:text-lg text-slate-900">{qty}</span>
-                          <button 
-                            onClick={() => addToCart(s)}
-                            className="p-3 md:p-4 hover:bg-slate-200 transition-colors text-pink-600"
-                          >
-                            <Plus size={14} />
-                          </button>
+                          <button onClick={() => addToCart(s)} className="p-3 md:p-4 hover:bg-slate-200 transition-colors text-pink-600"><Plus size={14} /></button>
                         </div>
                         
                         {qty > 0 && (
@@ -291,8 +282,53 @@ const HomePage = () => {
         </div>
       </section>
 
+      {/* Trust & Process Sections */}
+      <section className="py-24 px-4 md:px-12 bg-white">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
+           <div className="flex flex-col items-center text-center p-8 bg-slate-50 rounded-[40px] border border-slate-100">
+              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6"><Clock size={32}/></div>
+              <h4 className="text-xl font-heading font-black uppercase mb-3">Fast Delivery</h4>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed"><BanglaText>আমাদের মেথড গুলো খুবই দ্রুত কাজ করে। সাধারণত ২-২৪ ঘন্টার মধ্যেই সার্ভিস শুরু হয়ে যায়।</BanglaText></p>
+           </div>
+           <div className="flex flex-col items-center text-center p-8 bg-slate-50 rounded-[40px] border border-slate-100">
+              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6"><Lock size={32}/></div>
+              <h4 className="text-xl font-heading font-black uppercase mb-3">Safe & Secure</h4>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed"><BanglaText>আমরা কখনো আপনার পাসওয়ার্ড চাই না। শুধু লিঙ্ক দিলেই সার্ভিস ডেলিভারি সম্ভব। আইডি থাকবে নিরাপদ।</BanglaText></p>
+           </div>
+           <div className="flex flex-col items-center text-center p-8 bg-slate-50 rounded-[40px] border border-slate-100">
+              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6"><Target size={32}/></div>
+              <h4 className="text-xl font-heading font-black uppercase mb-3">Real Engagement</h4>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed"><BanglaText>বিডি রিয়েল ফলোয়ার ও রিয়েল লাইক দিয়ে আপনার পেজের অর্গানিক রিচ বাড়ানোর সেরা সমাধান।</BanglaText></p>
+           </div>
+        </div>
+      </section>
+
+      <section className="py-24 bg-slate-900 text-white px-4 md:px-12 overflow-hidden relative">
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="text-center mb-16">
+            <h2 className="text-3xl md:text-6xl font-heading font-black uppercase tracking-tighter mb-4">How it Works?</h2>
+            <p className="text-xs md:text-sm font-black uppercase tracking-[0.4em] text-pink-500">Simple 3-Step Process</p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+             {[
+               { step: '01', title: 'Choose Package', desc: 'পছন্দমতো সার্ভিস কার্টে যোগ করুন।' },
+               { step: '02', title: 'Online Payment', desc: 'বিকাশ বা নগদে নিরাপদে পেমেন্ট সম্পন্ন করুন।' },
+               { step: '03', title: 'Boom!', desc: 'ব্যাস! আপনার অর্ডারটি অটোমেটিকলি প্রসেসিং শুরু হবে।' }
+             ].map((item, idx) => (
+               <div key={idx} className="relative group">
+                  <div className="absolute -top-10 -left-6 text-9xl font-heading font-black text-white/5 group-hover:text-pink-500/10 transition-colors">{item.step}</div>
+                  <div className="bg-white/5 p-10 rounded-[50px] border border-white/10 hover:border-pink-500/30 transition-all">
+                     <h4 className="text-2xl font-heading font-black mb-4 uppercase">{item.title}</h4>
+                     <p className="text-white/40 font-bold"><BanglaText>{item.desc}</BanglaText></p>
+                  </div>
+               </div>
+             ))}
+          </div>
+        </div>
+      </section>
+
       {itemCount > 0 && (
-        <div className="md:hidden fixed bottom-6 left-4 right-4 z-40 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center justify-between border border-white/10 animate-in slide-in-from-bottom duration-500">
+        <div className="md:hidden fixed bottom-6 left-4 right-4 z-40 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center justify-between border border-white/10 animate-in slide-in-from-bottom">
            <div className="flex items-center gap-3">
              <div className="bg-pink-600 p-2 rounded-lg"><ShoppingBag size={18} /></div>
              <div>
@@ -326,101 +362,84 @@ const CartPage = () => {
     <div className="pt-24 md:pt-40 pb-32 bg-slate-50 px-4 md:px-12 min-h-screen">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl md:text-6xl font-heading font-black uppercase text-slate-900 mb-8 md:mb-20 tracking-tighter">My Selection</h1>
-        
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 md:gap-16">
-          <div className="lg:col-span-2 space-y-6 md:space-y-8">
-            <div className="bg-white p-6 md:p-12 rounded-3xl md:rounded-[50px] shadow-sm border border-slate-100">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <div className="lg:col-span-2 space-y-8">
+            <div className="bg-white p-6 md:p-12 rounded-[50px] shadow-sm border border-slate-100">
                {cart.map(item => (
-                 <div key={item.id} className="flex justify-between items-center py-4 md:py-8 border-b border-slate-50 last:border-0">
-                    <div className="flex flex-col gap-2 md:gap-4">
-                      <div className="flex items-center gap-2 md:gap-3">
-                        <PlatformIcon platform={item.platform} size={14} />
-                        <h4 className="text-sm md:text-xl font-heading font-black uppercase text-slate-900 leading-tight">{item.name}</h4>
-                      </div>
-                      <div className="flex items-center bg-slate-50 rounded-lg px-2 py-1 border border-slate-100 w-fit">
+                 <div key={item.id} className="flex justify-between items-center py-6 border-b border-slate-50 last:border-0">
+                    <div className="flex flex-col gap-2">
+                      <h4 className="text-lg font-heading font-black uppercase text-slate-900">{item.name}</h4>
+                      <div className="flex items-center bg-slate-50 rounded-lg px-2 py-1 w-fit border border-slate-100">
                         <button onClick={() => updateQuantity(item.id, item.quantity - 1)} className="text-slate-400 p-1"><Minus size={12}/></button>
-                        <span className="mx-3 font-heading font-black text-slate-900 text-xs md:text-sm">{item.quantity}</span>
+                        <span className="mx-3 font-heading font-black text-slate-900 text-sm">{item.quantity}</span>
                         <button onClick={() => updateQuantity(item.id, item.quantity + 1)} className="text-slate-400 p-1"><Plus size={12}/></button>
                       </div>
                     </div>
-                    <div className="flex items-center gap-4 md:gap-12">
-                       <span className="text-base md:text-2xl font-heading font-bold">{(item.price * item.quantity)}৳</span>
+                    <div className="flex items-center gap-6">
+                       <span className="text-xl font-heading font-bold">{(item.price * item.quantity)}৳</span>
                        <button onClick={() => removeFromCart(item.id)} className="text-slate-200 hover:text-red-500"><Trash2 size={18}/></button>
                     </div>
                  </div>
                ))}
-               <div className="pt-6 md:pt-8 flex justify-between items-center font-heading font-black text-slate-900 text-xl md:text-3xl">
+               <div className="pt-8 flex justify-between items-center font-heading font-black text-slate-900 text-3xl">
                   <span>Grand Total</span>
                   <span className="text-pink-600">{total}৳</span>
                </div>
             </div>
 
-            <div className="bg-white p-6 md:p-12 rounded-3xl md:rounded-[50px] shadow-sm border border-slate-100">
-              <h3 className="text-lg md:text-2xl font-heading font-black uppercase mb-6 md:mb-12 tracking-tight">Order Details</h3>
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
+            <div className="bg-white p-6 md:p-12 rounded-[50px] shadow-sm border border-slate-100">
+              <h3 className="text-2xl font-heading font-black uppercase mb-12 tracking-tight">Order Details</h3>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
                 {[
                   { label: 'Full Name *', name: 'name', icon: User, placeholder: 'e.g. Nayeem Uddin', required: true },
                   { label: 'Mobile Number *', name: 'mobile', icon: Phone, placeholder: '018XXXXXXXX', required: true },
                   { label: 'Customer Email *', name: 'email', icon: Star, placeholder: 'name@example.com', required: true },
                   { label: 'WhatsApp Number', name: 'whatsapp', icon: MessageCircle, placeholder: '018XXXXXXXX', required: false },
-                  { label: 'Link to Personal ID', name: 'personalFbLink', icon: Facebook, placeholder: 'fb.com/profile.php?id=...', required: false },
+                  { label: 'Link to Personal ID', name: 'personalFbLink', icon: Facebook, placeholder: 'fb.com/nayeem', required: false },
                   { label: 'Link to Promote *', name: 'targetLink', icon: ArrowUpRight, placeholder: 'fb.com/page/post', required: true }
                 ].map(f => (
                   <div key={f.name}>
-                    <label className="flex items-center gap-2 text-[9px] md:text-[10px] font-black uppercase tracking-widest text-slate-400 mb-2 md:mb-4">
-                      <f.icon size={12}/> {f.label}
-                    </label>
+                    <label className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-slate-400 mb-4"><f.icon size={12}/> {f.label}</label>
                     <input 
-                      type={f.name === 'email' ? 'email' : 'text'}
+                      type="text" 
                       placeholder={f.placeholder}
                       required={f.required}
                       onChange={e => setOrderInfo({...orderInfo, [f.name]: e.target.value})}
-                      className="w-full bg-slate-50 border border-slate-100 p-4 md:p-6 rounded-xl md:rounded-2xl focus:outline-none focus:border-pink-500 font-bold text-sm md:text-base"
+                      className="w-full bg-slate-50 border border-slate-100 p-6 rounded-2xl focus:outline-none focus:border-pink-500 font-bold"
                     />
                   </div>
                 ))}
               </div>
             </div>
           </div>
-
           <div className="lg:col-span-1">
-             <div className="bg-[#0f172a] text-white p-8 md:p-12 rounded-3xl md:rounded-[60px] shadow-2xl sticky top-24 space-y-4">
-                <h3 className="text-xl md:text-3xl font-heading font-black uppercase mb-6 md:mb-12">Summary</h3>
-                <div className="bg-white/5 p-4 md:p-8 rounded-2xl md:rounded-[40px] mb-8 md:mb-12 space-y-3">
+             <div className="bg-slate-900 text-white p-12 rounded-[60px] shadow-2xl sticky top-24 space-y-6">
+                <h3 className="text-2xl font-heading font-black uppercase mb-10">Payable</h3>
+                <div className="bg-white/5 p-8 rounded-[40px] mb-12 space-y-4">
                   {detailedSummaries.map((summary) => (
-                    <div key={summary.label} className="flex justify-between items-center text-[8px] md:text-[10px] font-black uppercase tracking-widest text-white/40">
+                    <div key={summary.label} className="flex justify-between items-center text-[10px] font-black uppercase tracking-widest text-white/40">
                       <span>{summary.label}</span>
-                      <span className="text-pink-500 text-sm">{summary.value}</span>
+                      <span className="text-pink-500 text-lg">{summary.value}</span>
                     </div>
                   ))}
                 </div>
-                <div className="pt-6 border-t border-white/10 flex justify-between items-center mb-8 md:mb-12">
-                  <span className="text-sm md:text-xl font-bold uppercase text-white/60">Payable</span>
-                  <span className="text-3xl md:text-5xl font-heading font-black text-pink-500">{total}৳</span>
+                <div className="pt-6 border-t border-white/10 flex justify-between items-center mb-12">
+                  <span className="text-xl font-bold uppercase text-white/60">Total</span>
+                  <span className="text-5xl font-heading font-black text-pink-500">{total}৳</span>
                 </div>
-                
                 <button 
                   onClick={() => {
-                    const { name, mobile, targetLink, email } = orderInfo;
-                    if (name.trim() && mobile.trim() && targetLink.trim() && email.trim()) {
+                    if (orderInfo.name && orderInfo.mobile && orderInfo.targetLink && orderInfo.email) {
                       localStorage.setItem('sociafy_pending_order_info', JSON.stringify(orderInfo));
                       navigate('/payment');
-                    } else {
-                      alert('প্লিজ সব প্রয়োজনীয় তথ্য সঠিকভাবে দিন (Full Name, Mobile, Email, and Link are required)');
-                    }
+                    } else { alert('Please fill required fields marked with *'); }
                   }}
-                  className="w-full bg-pink-600 py-4 md:py-6 rounded-2xl md:rounded-3xl text-sm md:text-lg font-black uppercase tracking-widest hover:bg-pink-700 transition-all active:scale-95 flex items-center justify-center gap-2"
+                  className="w-full bg-pink-600 py-6 rounded-3xl text-xl font-black uppercase tracking-widest hover:bg-pink-700 transition-all active:scale-95"
                 >
-                  Confirm & Pay Online
+                  Confirm Order
                 </button>
-
-                <a 
-                  href={generateWhatsAppLink(cart, orderInfo, total)}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full bg-green-600 py-4 md:py-6 rounded-2xl md:rounded-3xl text-sm md:text-lg font-black uppercase tracking-widest hover:bg-green-700 transition-all flex items-center justify-center gap-2"
-                >
-                  <MessageCircle size={20} /> Order & Pay in WhatsApp
+                <a href={generateWhatsAppLink(cart, orderInfo, total)} target="_blank" rel="noopener noreferrer" className="w-full bg-green-600 py-6 rounded-3xl text-xl font-black uppercase tracking-widest hover:bg-green-700 transition-all flex items-center justify-center gap-3">
+                  <MessageCircle size={24} /> Pay in WhatsApp
                 </a>
              </div>
           </div>
@@ -442,66 +461,49 @@ const PaymentPage = () => {
   const paymentNumber = '01846119500';
 
   const handleSubmit = async () => {
-    const cleanedNumber = senderNumber.replace(/\D/g, ''); 
-    if (cleanedNumber.length < 11) {
-      alert("পেমেন্ট সম্পন্ন করার নম্বরটি দিন (১১ ডিজিট)।");
+    const cleaned = senderNumber.replace(/\D/g, ''); 
+    if (cleaned.length < 11) {
+      alert("Please enter a valid 11-digit number.");
       return;
     }
     
     setIsProcessing(true);
-    const orderInfoRaw = localStorage.getItem('sociafy_pending_order_info');
-    const orderInfo = orderInfoRaw ? JSON.parse(orderInfoRaw) : {};
+    const orderInfo = JSON.parse(localStorage.getItem('sociafy_pending_order_info') || '{}');
     
     try {
       const response = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          orderInfo,
-          cart,
-          total,
-          paymentDetails: {
-            method,
-            senderNumber: cleanedNumber
-          }
-        })
+        body: JSON.stringify({ orderInfo, cart, total, paymentDetails: { method, senderNumber: cleaned } })
       });
 
-      if (!response.ok) throw new Error("Server error");
+      if (!response.ok) throw new Error("Connection failed");
       const result = await response.json();
 
       if (result.success) {
         setOrderSuccess(result.orderId);
         clearCart();
-        localStorage.removeItem('sociafy_pending_order_info');
       } else {
-        alert("অর্ডার সাবমিট করতে সমস্যা হয়েছে। দয়া করে হোয়াটসঅ্যাপে আমাদের জানান।");
+        alert("Server error. Please try ordering via WhatsApp.");
+        setIsProcessing(false);
       }
     } catch (error) {
-      console.error("Order error:", error);
-      alert("নেটওয়ার্ক সমস্যা। আবার চেষ্টা করুন অথবা সরাসরি হোয়াটসঅ্যাপে পেমেন্ট করুন।");
-    } finally {
+      console.error(error);
+      alert("Cannot connect to backend. If you are in demo mode, please deploy to Cloudflare Pages first. Alternatively, click 'Pay via WhatsApp'.");
       setIsProcessing(false);
     }
   };
 
   if (orderSuccess) return (
-    <div className="pt-32 pb-32 min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="max-w-xl w-full bg-white p-8 md:p-16 rounded-[40px] md:rounded-[60px] shadow-2xl border border-pink-100 text-center animate-in zoom-in">
-         <div className="w-20 h-20 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8">
-            <CheckCircle2 size={40} />
-         </div>
-         <h1 className="text-2xl md:text-4xl font-heading font-black uppercase text-slate-900 mb-2 tracking-tight">Order Placed!</h1>
-         <p className="text-pink-600 font-black mb-4 uppercase text-xs tracking-widest">Order ID: {orderSuccess}</p>
-         <div className="mb-10 text-slate-600 font-medium px-4">
-            <BanglaText>আপনার অর্ডারটি সাবমিট হয়েছে। আমরা ইমেইলের মাধ্যমে আপনাকে কনফার্মেশন পাঠিয়েছি।</BanglaText>
-         </div>
-         <div className="flex flex-col gap-3">
-            <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white w-full py-5 rounded-2xl font-black uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl">
-              <MessageCircle size={20} /> WhatsApp Support
-            </a>
-            <button onClick={() => navigate('/')} className="text-slate-400 font-black uppercase tracking-widest text-[9px] py-4">Return Home</button>
-         </div>
+    <div className="pt-40 pb-40 min-h-screen flex items-center justify-center bg-slate-50 px-4">
+      <div className="max-w-xl w-full bg-white p-16 rounded-[60px] shadow-2xl border border-pink-100 text-center animate-in zoom-in">
+         <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8"><CheckCircle2 size={48} /></div>
+         <h1 className="text-4xl font-heading font-black uppercase text-slate-900 mb-2">Order Confirmed!</h1>
+         <p className="text-pink-600 font-black mb-10 uppercase text-sm tracking-widest">Order ID: {orderSuccess}</p>
+         <div className="mb-10 text-slate-400 font-medium px-4"><BanglaText>আমরা আপনার ইমেইলে কনফার্মেশন পাঠিয়েছি। আপনার সার্ভিসটি প্রসেসিং শুরু হয়েছে।</BanglaText></div>
+         <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white w-full py-6 rounded-3xl font-black uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl hover:scale-105 transition-all">
+           <MessageCircle size={24} /> WhatsApp Support
+         </a>
       </div>
     </div>
   );
@@ -511,61 +513,35 @@ const PaymentPage = () => {
       <div className="max-w-xl mx-auto">
         <div className="text-center mb-10">
             <h1 className="text-3xl md:text-5xl font-heading font-black uppercase text-slate-900 mb-2 tracking-tighter">Payment</h1>
-            <p className="text-[9px] font-black uppercase text-slate-400 tracking-[0.3em]">Easy & Secure Settlement</p>
+            <p className="text-[9px] font-black uppercase text-slate-400 tracking-[0.3em]">Secure Verification</p>
         </div>
-        
         <div className="space-y-6">
           <div className="flex gap-3">
-            <button onClick={() => setMethod('bKash')} className={`flex-1 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all ${method === 'bKash' ? 'bg-[#D12053] text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-100'}`}>bKash</button>
-            <button onClick={() => setMethod('Nagad')} className={`flex-1 py-5 rounded-2xl font-black uppercase tracking-widest text-[10px] transition-all ${method === 'Nagad' ? 'bg-[#f97316] text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-100'}`}>Nagad</button>
+            <button onClick={() => setMethod('bKash')} className={`flex-1 py-5 rounded-2xl font-black uppercase text-[10px] transition-all ${method === 'bKash' ? 'bg-[#D12053] text-white shadow-lg' : 'bg-white text-slate-400'}`}>bKash</button>
+            <button onClick={() => setMethod('Nagad')} className={`flex-1 py-5 rounded-2xl font-black uppercase text-[10px] transition-all ${method === 'Nagad' ? 'bg-[#f97316] text-white shadow-lg' : 'bg-white text-slate-400'}`}>Nagad</button>
           </div>
-
-          <div className="bg-white p-6 md:p-10 rounded-[40px] border border-slate-100 shadow-xl space-y-8">
+          <div className="bg-white p-10 rounded-[40px] border border-slate-100 shadow-xl space-y-8">
                <div className="flex items-center gap-4 border-b border-slate-50 pb-6">
                   <div className="bg-slate-900 text-white w-8 h-8 rounded-full flex items-center justify-center font-black text-xs shrink-0">1</div>
                   <p className="text-sm font-bold text-slate-900 leading-tight"><BanglaText>এই নম্বরে "{total}৳" সেন্ড মানি করুন (পার্সোনাল)</BanglaText></p>
                </div>
-
-               <div className="flex flex-col gap-6">
-                  <div>
-                    <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-3">Target Number (Click to copy)</p>
-                    <button 
-                      onClick={() => { navigator.clipboard.writeText(paymentNumber); alert('নম্বর কপি হয়েছে!'); }}
-                      className="w-full flex items-center justify-between bg-slate-50 px-6 py-5 rounded-2xl font-heading font-black text-slate-900 text-xl border border-slate-100 active:scale-95 transition-all"
-                    >
-                      <span>{paymentNumber}</span>
-                      <Check size={20} className="text-pink-500" />
-                    </button>
-                  </div>
-
-                  <div>
-                    <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-3">Your {method} Number</p>
-                    <input 
-                      type="text" 
-                      placeholder="017XXXXXXXX"
-                      value={senderNumber}
-                      onChange={e => setSenderNumber(e.target.value)}
-                      className="w-full bg-white border-2 border-slate-100 px-6 py-5 rounded-2xl font-heading font-black text-slate-900 text-center focus:outline-none focus:border-pink-500"
-                    />
-                  </div>
-               </div>
-
-               <div className="pt-4 flex flex-col gap-3">
-                  <button 
-                    onClick={handleSubmit}
-                    disabled={isProcessing}
-                    className={`w-full py-5 rounded-2xl text-xs font-black uppercase tracking-widest text-white transition-all shadow-xl disabled:opacity-50 ${method === 'bKash' ? 'bg-[#D12053]' : 'bg-[#f97316]'}`}
-                  >
-                    {isProcessing ? 'Verifying...' : 'Submit Payment Info'}
+               <div>
+                  <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-3">Target Number (Copy)</p>
+                  <button onClick={() => { navigator.clipboard.writeText(paymentNumber); alert('Copied!'); }} className="w-full flex items-center justify-between bg-slate-50 px-6 py-5 rounded-2xl font-heading font-black text-slate-900 text-xl border border-slate-100">
+                    <span>{paymentNumber}</span>
+                    <Check size={20} className="text-pink-500" />
                   </button>
-                  
-                  <a 
-                    href={generateWhatsAppLink(cart, JSON.parse(localStorage.getItem('sociafy_pending_order_info') || '{}'), total)}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="w-full bg-green-600 py-5 rounded-2xl text-[10px] font-black uppercase tracking-widest text-white transition-all shadow-xl flex items-center justify-center gap-2"
-                  >
-                    <MessageCircle size={14} /> Pay via WhatsApp directly
+               </div>
+               <div>
+                  <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-3">Your {method} Number</p>
+                  <input type="text" placeholder="01XXXXXXXXX" value={senderNumber} onChange={e => setSenderNumber(e.target.value)} className="w-full bg-white border-2 border-slate-100 px-6 py-5 rounded-2xl font-heading font-black text-center focus:outline-none focus:border-pink-500" />
+               </div>
+               <div className="flex flex-col gap-4">
+                  <button onClick={handleSubmit} disabled={isProcessing} className={`w-full py-6 rounded-3xl text-sm font-black uppercase tracking-widest text-white shadow-xl transition-all ${method === 'bKash' ? 'bg-[#D12053]' : 'bg-[#f97316]'} ${isProcessing ? 'opacity-50' : ''}`}>
+                    {isProcessing ? 'VERIFYING...' : 'Submit Verification'}
+                  </button>
+                  <a href={generateWhatsAppLink(cart, JSON.parse(localStorage.getItem('sociafy_pending_order_info') || '{}'), total)} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white w-full py-6 rounded-3xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl">
+                    <MessageCircle size={16} /> Pay via WhatsApp directly
                   </a>
                </div>
           </div>
@@ -589,28 +565,25 @@ const App = () => (
             <Route path="/reviews" element={<ReviewsPage />} />
           </Routes>
         </main>
-        
-        <footer className="bg-white pt-16 pb-12 border-t border-slate-100 px-4 md:px-12 text-center">
+        <footer className="bg-white pt-24 pb-12 border-t border-slate-100 px-4 md:px-12 text-center">
           <div className="max-w-7xl mx-auto">
-            <div className="mb-8">
-              <span className="text-xl md:text-2xl font-heading font-black tracking-tighter text-slate-900 block mb-1">Sociafy</span>
-              <span className="text-[8px] md:text-[10px] font-black text-pink-500 uppercase tracking-widest">Premium Digital Growth Since 2021</span>
+            <div className="mb-12">
+              <span className="text-2xl font-heading font-black tracking-tighter text-slate-900 block mb-1">Sociafy</span>
+              <span className="text-[10px] font-black text-pink-500 uppercase tracking-widest">Growth Architecture since 2021</span>
             </div>
-            
-            <div className="flex flex-col items-center gap-6 mb-10">
-               <div className="flex gap-6">
-                  <a href={SOCIAFY_INFO.facebook} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#1877F2]"><Facebook size={20} /></a>
-                  <a href={SOCIAFY_INFO.instagram} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-[#E4405F]"><Instagram size={20} /></a>
-                  <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-green-600"><MessageCircle size={20} /></a>
+            <div className="flex flex-col items-center gap-10">
+               <div className="flex gap-12 text-slate-300">
+                  <a href={SOCIAFY_INFO.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-[#1877F2] transition-colors"><Facebook size={24} /></a>
+                  <a href={SOCIAFY_INFO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] transition-colors"><Instagram size={24} /></a>
+                  <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><MessageCircle size={24} /></a>
                </div>
-               <div className="text-[8px] md:text-[9px] font-black uppercase tracking-[0.2em] text-slate-300">© {new Date().getFullYear()} Sociafy Digital. All Rights Reserved.</div>
+               <div className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">© {new Date().getFullYear()} Sociafy Digital. All Rights Reserved.</div>
             </div>
           </div>
         </footer>
-
-        <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] text-white p-3 md:pr-6 md:pl-4 md:py-3 rounded-full shadow-2xl hover:scale-105 transition-all group active:scale-95">
+        <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all group">
           <MessageCircle size={24} />
-          <span className="hidden md:block font-heading font-black uppercase text-[10px] tracking-widest">WhatsApp directly</span>
+          <span className="hidden md:block font-heading font-black uppercase text-[10px] tracking-widest">Pay in WhatsApp</span>
         </a>
       </div>
     </Router>
@@ -620,18 +593,18 @@ const App = () => (
 const ReviewsPage = () => (
   <div className="pt-24 md:pt-40 pb-32 bg-slate-50 px-4 md:px-12 min-h-screen">
     <div className="max-w-7xl mx-auto">
-      <div className="text-center mb-12">
+      <div className="text-center mb-16">
         <h1 className="text-4xl md:text-7xl font-heading font-black uppercase text-slate-900 mb-4 tracking-tighter">Reviews</h1>
-        <p className="text-slate-400 font-black uppercase tracking-[0.3em] text-[9px] md:text-[10px]">Trusted by Clients</p>
+        <p className="text-pink-500 font-black uppercase tracking-[0.3em] text-[10px]">What Our Clients Say</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         {REVIEWS.map((r, i) => (
-          <div key={i} className="bg-white p-6 md:p-10 rounded-3xl border border-slate-100 shadow-sm flex flex-col hover:shadow-lg transition-all">
-            <div className="flex gap-0.5 mb-6">{[1,2,3,4,5].map(s => <Star key={s} size={12} fill="#F472B6" stroke="#F472B6" />)}</div>
-            <p className="text-base md:text-lg font-medium text-slate-700 italic mb-8 leading-relaxed font-heading">"{r.text}"</p>
-            <div className="mt-auto flex items-center justify-between">
-                <span className="font-heading font-black uppercase text-slate-900 text-xs tracking-tight">{r.name}</span>
-                <CheckCircle2 size={16} className="text-green-500" />
+          <div key={i} className="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm flex flex-col hover:shadow-2xl hover:border-pink-100 transition-all group">
+            <div className="flex gap-1 mb-8">{[1,2,3,4,5].map(s => <Star key={s} size={14} className="text-pink-500" fill="currentColor" />)}</div>
+            <p className="text-lg font-medium text-slate-600 italic mb-10 leading-relaxed font-heading">"{r.text}"</p>
+            <div className="mt-auto flex items-center justify-between border-t border-slate-50 pt-6">
+                <span className="font-heading font-black uppercase text-slate-900 tracking-tight">{r.name}</span>
+                <div className="bg-green-100 text-green-600 p-1.5 rounded-full"><CheckCircle2 size={14} /></div>
             </div>
           </div>
         ))}
