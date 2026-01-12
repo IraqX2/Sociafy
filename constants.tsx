@@ -127,7 +127,7 @@ export const SERVICES: Service[] = [
     unitLabel: 'Coins',
     deliveryTime: 'Instant',
     description: 'টিকটক কয়েন রিচার্জ। দ্রুত ডেলিভারি এবং ১০০% সেফ মেথড।',
-    imageUrl: 'https://images.unsplash.com/photo-1598550476439-6847785fce66?auto=format&fit=crop&q=80&w=400'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1768251042/2db3f20a-ace1-4be2-adcd-47aa9dcb0c43.png'
   }
 ];
 
