@@ -12,22 +12,10 @@ export const SOCIAFY_INFO = {
 };
 
 export const SERVICES: Service[] = [
-  // Facebook Followers
-  {
-    id: 'fb-f-1k-real',
-    name: 'FB Real Followers 1000',
-    platform: 'facebook',
-    category: 'followers',
-    price: 220,
-    unitValue: 1000,
-    unitLabel: 'Real Followers',
-    deliveryTime: '24-36h',
-    description: 'রিয়েল আইডি থেকে ফলোয়ার। পার্সোনাল আইডি বা বিজনেস পেজের ট্রাস্ট বাড়াতে সেরা।',
-    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767732848/How-to-Naturally-Get-More-Facebook-Follower_lnql5m.jpg'
-  },
+  // 1) FB Bot Follow
   {
     id: 'fb-f-1k-bot',
-    name: 'FB Bot Followers 1000',
+    name: 'FB Bot Follow 1000',
     platform: 'facebook',
     category: 'followers',
     price: 120,
@@ -37,23 +25,36 @@ export const SERVICES: Service[] = [
     description: 'সল্প মূল্যে প্রোফাইল বা পেজের সংখ্যা বাড়াতে সাহায্য করে। দেখতে প্রফেশনাল।',
     imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767732848/How-to-Naturally-Get-More-Facebook-Follower_lnql5m.jpg'
   },
-  // Instagram
+  // 2) BD real follower
   {
-    id: 'ig-f-1k',
-    name: 'IG Followers 1000',
-    platform: 'instagram',
+    id: 'fb-f-1k-real',
+    name: 'FB BD Real Follower 1000',
+    platform: 'facebook',
     category: 'followers',
-    price: 250,
+    price: 220,
     unitValue: 1000,
-    unitLabel: 'Followers',
-    deliveryTime: '24h',
-    description: 'অর্গানিক লুক সহ হাই কোয়ালিটি প্রোফাইল ফলোয়ার। ড্রপ হওয়ার ভয় নেই।',
-    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733641/EasyRate-Instagram-Followers_fknmwz.png'
+    unitLabel: 'Real Followers',
+    deliveryTime: '24-36h',
+    description: '১০০% রিয়েল বিডি আইডি থেকে ফলোয়ার। আইডি বা পেজের ট্রাস্ট বাড়াতে সেরা।',
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767732848/How-to-Naturally-Get-More-Facebook-Follower_lnql5m.jpg'
   },
-  // Facebook Views
+  // 3) post Reaction service
+  {
+    id: 'fb-reactions-1k',
+    name: 'FB Post Reaction Service 1000',
+    platform: 'facebook',
+    category: 'likes',
+    price: 180,
+    unitValue: 1000,
+    unitLabel: 'Reactions',
+    deliveryTime: '12-24h',
+    description: 'আপনার ফেসবুক পোস্টের রিঅ্যাকশন (Like, Love, Wow) বাড়াতে সাহায্য করে।',
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733986/8d1a8336-ac1c-4d19-b1ec-a12a5c86a285.png'
+  },
+  // 4) fb vid Views service
   {
     id: 'fb-v-5k',
-    name: 'FB Video Views 5000',
+    name: 'FB Vid Views Service 5000',
     platform: 'facebook',
     category: 'views',
     price: 100,
@@ -63,35 +64,49 @@ export const SERVICES: Service[] = [
     description: 'ফেসবুক রিলস বা ভিডিও ভিউজ। দ্রুত এনগেজমেন্ট বাড়াতে সাহায্য করবে।',
     imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733986/8d1a8336-ac1c-4d19-b1ec-a12a5c86a285.png'
   },
-  // Facebook Ads
+  // 5) fb Boosting service
   {
     id: 'fb-ads',
-    name: 'FB Ad Boosting (Custom Budget)',
+    name: 'FB Boosting Service (Custom)',
     platform: 'facebook',
     category: 'ads',
-    price: 155, 
+    price: 160, 
     unitValue: 1,
     unitLabel: 'Dollar ($)',
     deliveryTime: 'Instant',
-    description: 'ফেসবুক অ্যাড বুস্টিং সুবিধা। ডলার প্রতি মাত্র ১৫৫ টাকা। সঠিক অডিয়েন্স টার্গেটিং।',
+    description: 'ফেসবুক অ্যাড বুস্টিং সুবিধা। ডলার প্রতি ১৬০ টাকা। সঠিক অডিয়েন্স টার্গেটিং।',
     imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1768072735/aed2cca6-1842-44f1-bf1d-88b9b10b9c4e.png'
   },
-  // Verification
+  // 6) IG Follow service (International)
+  {
+    id: 'ig-f-1k',
+    name: 'IG International Follow Service 1000',
+    platform: 'instagram',
+    category: 'followers',
+    price: 250,
+    unitValue: 1000,
+    unitLabel: 'Followers',
+    deliveryTime: '24h',
+    description: 'ইন্টারন্যাশনাল হাই কোয়ালিটি প্রোফাইল ফলোয়ার। ড্রপ হওয়ার ভয় নেই।',
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733641/EasyRate-Instagram-Followers_fknmwz.png'
+  },
+  // 7) fb Verified
   {
     id: 'fb-verify',
-    name: 'FaceBook Verified Badge',
+    name: 'FB Verified Badge Service',
     platform: 'facebook',
     category: 'verification',
-    price: 1400,
+    price: 1200,
     unitValue: 1,
     unitLabel: 'Month Subscription',
     deliveryTime: '7-15 Days',
-    description: 'Buy or Renew , আইডি বা পেজ ভেরিফিকেশন সার্ভিস (প্রতি মাস)। সিকিউর ও অফিসিয়াল মেথড।',
+    description: 'আইডি বা পেজ ভেরিফিকেশন সার্ভিস (প্রতি মাস)। সিকিউর ও অফিসিয়াল মেথড।',
     imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1768072790/bcc4d2fc-3102-42e1-9004-052c517188ed.png'
   },
+  // 8) Comment service
   {
     id: 'fb-c-100',
-    name: 'FB Custom Comments 100',
+    name: 'FB Comment Service 100',
     platform: 'facebook',
     category: 'comments',
     price: 200,
@@ -100,6 +115,19 @@ export const SERVICES: Service[] = [
     deliveryTime: '24-36h',
     description: 'আপনার পছন্দমতো কাস্টম কমেন্ট। পেজের বিশ্বস্ততা বাড়ায়।',
     imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733986/8d1a8336-ac1c-4d19-b1ec-a12a5c86a285.png'
+  },
+  // TikTok Coins
+  {
+    id: 'tiktok-coins-100',
+    name: 'TikTok Coins (100 Coins)',
+    platform: 'tiktok',
+    category: 'other',
+    price: 205,
+    unitValue: 100,
+    unitLabel: 'Coins',
+    deliveryTime: 'Instant',
+    description: 'টিকটক কয়েন রিচার্জ। দ্রুত ডেলিভারি এবং ১০০% সেফ মেথড।',
+    imageUrl: 'https://images.unsplash.com/photo-1598550476439-6847785fce66?auto=format&fit=crop&q=80&w=400'
   }
 ];
 
