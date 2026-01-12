@@ -123,7 +123,7 @@ const Navbar = () => {
   const navigate = useNavigate();
 
   return (
-    <nav className="fixed w-full z-50 border-b shadow-sm backdrop-blur-sm transition-all duration-500 bg-white/95 border-pink-50">
+    <nav className="fixed w-full z-[60] border-b shadow-sm backdrop-blur-sm transition-all duration-500 bg-white/95 border-pink-50">
       <div className="max-w-7xl mx-auto px-4 md:px-12">
         <div className="flex justify-between h-16 md:h-20 items-center">
           <div className="flex items-center gap-2 md:gap-4">
@@ -328,7 +328,7 @@ const HomePage = () => {
       </section>
 
       {itemCount > 0 && (
-        <div className="md:hidden fixed bottom-6 left-4 right-4 z-40 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center justify-between border border-white/10 animate-in slide-in-from-bottom">
+        <div className="md:hidden fixed bottom-6 left-4 right-4 z-50 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center justify-between border border-white/10 animate-in slide-in-from-bottom">
            <div className="flex items-center gap-3">
              <div className="bg-pink-600 p-2 rounded-lg"><ShoppingBag size={18} /></div>
              <div>
@@ -470,26 +470,38 @@ const PaymentPage = () => {
     setIsProcessing(true);
     const orderInfo = JSON.parse(localStorage.getItem('sociafy_pending_order_info') || '{}');
     
+    // Add a timeout to avoid infinite loading if backend is not responsive
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+
     try {
       const response = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ orderInfo, cart, total, paymentDetails: { method, senderNumber: cleaned } })
+        body: JSON.stringify({ orderInfo, cart, total, paymentDetails: { method, senderNumber: cleaned } }),
+        signal: controller.signal
       });
 
-      if (!response.ok) throw new Error("Connection failed");
+      clearTimeout(timeoutId);
+
+      if (!response.ok) {
+         throw new Error("Cannot reach server. Are you on Cloudflare?");
+      }
+      
       const result = await response.json();
 
       if (result.success) {
         setOrderSuccess(result.orderId);
         clearCart();
       } else {
-        alert("Server error. Please try ordering via WhatsApp.");
+        alert("Server error: " + (result.error || "Unknown error"));
         setIsProcessing(false);
       }
-    } catch (error) {
+    } catch (error: any) {
+      clearTimeout(timeoutId);
       console.error(error);
-      alert("Cannot connect to backend. If you are in demo mode, please deploy to Cloudflare Pages first. Alternatively, click 'Pay via WhatsApp'.");
+      const isAbort = error.name === 'AbortError';
+      alert(isAbort ? "Request timed out. Please pay via WhatsApp instead." : "Payment submission failed. This is likely because the backend (Cloudflare Function) is only available after you deploy to Cloudflare Pages. \n\nPlease use the WhatsApp payment button below.");
       setIsProcessing(false);
     }
   };
@@ -552,40 +564,61 @@ const PaymentPage = () => {
 };
 
 // --- App ---
-const App = () => (
+const App = () => {
+  const location = useLocation();
+  const { itemCount } = useCart();
+  
+  // Logic to adjust WhatsApp button position when Proceed bar is visible on home page mobile
+  const isHomePage = location.pathname === '/';
+  const waBottomClass = (isHomePage && itemCount > 0) ? 'bottom-28' : 'bottom-6';
+
+  return (
+    <div className="min-h-screen flex flex-col selection:bg-pink-500 selection:text-white">
+      <Navbar />
+      <main className="flex-grow">
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/cart" element={<CartPage />} />
+          <Route path="/payment" element={<PaymentPage />} />
+          <Route path="/reviews" element={<ReviewsPage />} />
+        </Routes>
+      </main>
+      <footer className="bg-white pt-24 pb-12 border-t border-slate-100 px-4 md:px-12 text-center">
+        <div className="max-w-7xl mx-auto">
+          <div className="mb-12">
+            <span className="text-2xl font-heading font-black tracking-tighter text-slate-900 block mb-1">Sociafy</span>
+            <span className="text-[10px] font-black text-pink-500 uppercase tracking-widest">Growth Architecture since 2021</span>
+          </div>
+          <div className="flex flex-col items-center gap-10">
+             <div className="flex gap-12 text-slate-300">
+                <a href={SOCIAFY_INFO.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-[#1877F2] transition-colors"><Facebook size={24} /></a>
+                <a href={SOCIAFY_INFO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] transition-colors"><Instagram size={24} /></a>
+                <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><MessageCircle size={24} /></a>
+             </div>
+             <div className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">© {new Date().getFullYear()} Sociafy Digital. All Rights Reserved.</div>
+          </div>
+        </div>
+      </footer>
+      
+      {/* Dynamic positioning for WhatsApp icon based on mobile state */}
+      <a 
+        href={SOCIAFY_INFO.whatsapp} 
+        target="_blank" 
+        rel="noopener noreferrer" 
+        className={`fixed ${waBottomClass} md:bottom-6 right-6 z-[100] flex items-center gap-2 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all group active:scale-95`}
+      >
+        <MessageCircle size={24} />
+        <span className="hidden md:block font-heading font-black uppercase text-[10px] tracking-widest">WhatsApp Support</span>
+      </a>
+    </div>
+  );
+};
+
+// Root wrapper for router
+const AppWrapper = () => (
   <CartProvider>
     <Router>
-      <div className="min-h-screen flex flex-col selection:bg-pink-500 selection:text-white">
-        <Navbar />
-        <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/cart" element={<CartPage />} />
-            <Route path="/payment" element={<PaymentPage />} />
-            <Route path="/reviews" element={<ReviewsPage />} />
-          </Routes>
-        </main>
-        <footer className="bg-white pt-24 pb-12 border-t border-slate-100 px-4 md:px-12 text-center">
-          <div className="max-w-7xl mx-auto">
-            <div className="mb-12">
-              <span className="text-2xl font-heading font-black tracking-tighter text-slate-900 block mb-1">Sociafy</span>
-              <span className="text-[10px] font-black text-pink-500 uppercase tracking-widest">Growth Architecture since 2021</span>
-            </div>
-            <div className="flex flex-col items-center gap-10">
-               <div className="flex gap-12 text-slate-300">
-                  <a href={SOCIAFY_INFO.facebook} target="_blank" rel="noopener noreferrer" className="hover:text-[#1877F2] transition-colors"><Facebook size={24} /></a>
-                  <a href={SOCIAFY_INFO.instagram} target="_blank" rel="noopener noreferrer" className="hover:text-[#E4405F] transition-colors"><Instagram size={24} /></a>
-                  <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="hover:text-green-600 transition-colors"><MessageCircle size={24} /></a>
-               </div>
-               <div className="text-[10px] font-black uppercase tracking-[0.4em] text-slate-300">© {new Date().getFullYear()} Sociafy Digital. All Rights Reserved.</div>
-            </div>
-          </div>
-        </footer>
-        <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all group">
-          <MessageCircle size={24} />
-          <span className="hidden md:block font-heading font-black uppercase text-[10px] tracking-widest">Pay in WhatsApp</span>
-        </a>
-      </div>
+      <App />
     </Router>
   </CartProvider>
 );
@@ -613,4 +646,4 @@ const ReviewsPage = () => (
   </div>
 );
 
-export default App;
+export default AppWrapper;
