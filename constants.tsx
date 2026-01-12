@@ -114,7 +114,7 @@ export const SERVICES: Service[] = [
     unitLabel: 'Custom Comments',
     deliveryTime: '24-36h',
     description: 'আপনার পছন্দমতো কাস্টম কমেন্ট। পেজের বিশ্বস্ততা বাড়ায়।',
-    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1767733986/8d1a8336-ac1c-4d19-b1ec-a12a5c86a285.png'
+    imageUrl: 'https://res.cloudinary.com/dx9efyuos/image/upload/v1768251572/ec8c5284-e858-4f5f-b624-1bc3d8833e66.png'
   },
   // TikTok Coins
   {
