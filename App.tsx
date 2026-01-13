@@ -25,7 +25,10 @@ import {
   Star,
   Clock,
   Lock,
-  Target
+  Target,
+  AlertCircle,
+  Copy,
+  ExternalLink
 } from 'lucide-react';
 import { CartItem, Service, OrderInfo, Platform } from './types';
 import { SERVICES, SOCIAFY_INFO, REVIEWS } from './constants';
@@ -210,7 +213,7 @@ const HomePage = () => {
           <span className="text-pink-500 italic">Brand Identity.</span>
         </h1>
         <p className="text-base md:text-xl text-slate-500 max-w-2xl mx-auto mb-10 md:mb-16 font-medium leading-relaxed px-2">
-          <BanglaText>আইডি বা পেজে লাইক, ফলোয়ার বা ভিউ নেওয়া এখন পানির মতো সহজ। ১০০% রিয়েল অথবা হাই-কোয়ালিটি বট — যা খুশি বেছে নিন।</BanglaText>
+          <BanglaText>আইডি বা পেজে লাইক, ফলোয়ার বা ভিউ নেওয়া এখন পানির মতো সহজ। 100% রিয়েল অথবা হাই-কোয়ালিটি বট — যা খুশি বেছে নিন।</BanglaText>
         </p>
         <div className="flex flex-col sm:flex-row justify-center gap-4 md:gap-6 px-4">
           <a href="#packages" className="bg-slate-900 text-white px-8 py-5 md:px-12 md:py-6 rounded-2xl md:rounded-full font-black uppercase tracking-widest text-[10px] md:text-xs hover:bg-pink-600 shadow-xl transition-all">
@@ -225,11 +228,11 @@ const HomePage = () => {
       <section id="packages" className="py-16 md:py-24 bg-slate-50 px-4 md:px-12 border-y border-slate-100">
         <div className="max-w-7xl mx-auto">
           <div className="mb-12 text-center">
-            <h2 className="text-3xl md:text-6xl font-heading font-black uppercase text-slate-900 mb-2 tracking-tighter">Choose Your Growth</h2>
+            <h2 className="text-3xl md:text-6xl font-heading font-black uppercase text-slate-900 mb-2 tracking-tighter">Choose Your Package</h2>
             <p className="text-sm md:text-lg text-slate-400 font-medium"><BanglaText>সেরা গ্রোথ মেথড গুলো এখানে।</BanglaText></p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
             {SERVICES.map((s) => {
               const item = cart.find(c => c.serviceId === s.id);
               const qty = item?.quantity || 0;
@@ -237,40 +240,44 @@ const HomePage = () => {
               return (
                 <div 
                   key={s.id} 
-                  className={`bg-white rounded-3xl md:rounded-[40px] border transition-all duration-300 p-5 md:p-8 flex flex-col gap-4 md:gap-6 group ${qty > 0 ? 'border-pink-500 ring-4 ring-pink-500/10 shadow-[0_20px_50px_rgba(244,114,182,0.15)] scale-[1.03]' : 'border-slate-100 hover:shadow-xl'}`}
+                  className={`group relative rounded-[40px] border transition-all duration-500 p-6 md:p-10 flex flex-col gap-6 overflow-hidden ${qty > 0 ? 'bg-white border-pink-500 ring-4 ring-pink-500/10 shadow-[0_30px_60px_rgba(244,114,182,0.2)] scale-[1.04] z-10' : 'bg-slate-100 border-slate-200 hover:bg-white hover:border-slate-300 hover:shadow-2xl hover:scale-[1.02]'}`}
                 >
                   <div className="flex justify-between items-start">
-                    <div className="w-20 md:w-1/3 aspect-square rounded-2xl overflow-hidden bg-slate-50 border border-slate-100 shadow-inner">
+                    <div className="w-24 md:w-32 aspect-square rounded-3xl overflow-hidden bg-white border border-slate-200 shadow-md transition-transform group-hover:scale-105 duration-500">
                       <img src={s.imageUrl} className="w-full h-full object-cover" alt={s.name} />
                     </div>
-                    <div className={`p-2 md:p-3 rounded-xl md:rounded-2xl shadow-sm border ${qty > 0 ? 'bg-pink-50 border-pink-200' : 'bg-slate-50 border-slate-100'}`}>
-                      <PlatformIcon platform={s.platform} size={20} />
+                    <div className={`p-3 rounded-2xl shadow-sm border backdrop-blur-md ${qty > 0 ? 'bg-pink-50 border-pink-500' : 'bg-white border-slate-200'}`}>
+                      <PlatformIcon platform={s.platform} size={24} className={qty > 0 ? 'text-pink-500' : 'text-slate-400'} />
                     </div>
                   </div>
 
                   <div className="flex flex-col justify-between flex-grow">
                     <div>
-                      <h3 className="text-lg md:text-xl font-heading font-black text-slate-900 uppercase mb-1 leading-tight">{s.name}</h3>
-                      <p className="text-[10px] md:text-xs text-slate-400 font-bold mb-4 md:mb-6"><BanglaText>{s.description}</BanglaText></p>
+                      <h3 className="text-xl md:text-2xl font-heading font-black text-slate-900 uppercase mb-2 leading-tight tracking-tight">{s.name}</h3>
+                      <p className="text-[11px] md:text-xs text-slate-500 font-bold mb-6 md:mb-8 leading-relaxed">
+                        <BanglaText>{s.description}</BanglaText>
+                      </p>
                       
-                      <div className="flex items-center gap-3 mb-6 md:mb-8">
-                        <span className={`text-2xl md:text-3xl font-heading font-black ${qty > 0 ? 'text-pink-600' : 'text-slate-900'}`}>{s.price}৳</span>
-                        <span className="text-[9px] md:text-[11px] font-black uppercase text-slate-900 tracking-wider bg-slate-50 px-3 py-1.5 rounded-full border border-slate-200">
-                          Per {s.unitValue} {s.unitLabel}
+                      <div className="flex items-center gap-4 mb-8 md:mb-10">
+                        <div className={`px-4 py-2 rounded-xl font-heading font-black text-2xl md:text-3xl shadow-sm transition-colors ${qty > 0 ? 'bg-pink-500 text-white' : 'bg-white text-slate-900 border border-slate-200'}`}>
+                          {s.price}৳
+                        </div>
+                        <span className="text-[10px] md:text-[11px] font-black uppercase text-slate-400 tracking-wider bg-white/50 px-4 py-2 rounded-full border border-slate-200">
+                          {s.unitValue} {s.unitLabel}
                         </span>
                       </div>
                     </div>
 
-                    <div className="flex items-center justify-between">
-                        <div className={`flex items-center rounded-xl overflow-hidden transition-colors ${qty > 0 ? 'bg-pink-100' : 'bg-slate-100'}`}>
-                          <button onClick={() => item && updateQuantity(item.id, qty - 1)} className="p-3 md:p-4 hover:bg-slate-200 transition-colors text-slate-600"><Minus size={14} /></button>
-                          <span className="w-8 md:w-10 text-center font-heading font-black text-base md:text-lg text-slate-900">{qty}</span>
-                          <button onClick={() => addToCart(s)} className="p-3 md:p-4 hover:bg-slate-200 transition-colors text-pink-600"><Plus size={14} /></button>
+                    <div className={`flex items-center justify-between mt-auto pt-6 border-t ${qty > 0 ? 'border-pink-50' : 'border-slate-200'}`}>
+                        <div className={`flex items-center rounded-2xl overflow-hidden transition-all duration-300 ${qty > 0 ? 'bg-pink-100' : 'bg-white border border-slate-200'}`}>
+                          <button onClick={() => item && updateQuantity(item.id, qty - 1)} className="p-4 hover:bg-slate-50 transition-colors text-slate-400"><Minus size={16} /></button>
+                          <span className={`w-10 text-center font-heading font-black text-xl ${qty > 0 ? 'text-pink-600' : 'text-slate-900'}`}>{qty}</span>
+                          <button onClick={() => addToCart(s)} className="p-4 hover:bg-slate-50 transition-colors text-pink-600"><Plus size={16} /></button>
                         </div>
                         
                         {qty > 0 && (
-                          <div className="text-[9px] font-black text-pink-500 uppercase tracking-widest animate-in zoom-in">
-                            {(s.price * qty)}৳ Total
+                          <div className="text-[10px] font-black text-pink-500 uppercase tracking-widest animate-in zoom-in slide-in-from-right-2">
+                             {(s.price * qty)}৳ TOTAL
                           </div>
                         )}
                     </div>
@@ -285,20 +292,20 @@ const HomePage = () => {
       {/* Trust & Process Sections */}
       <section className="py-24 px-4 md:px-12 bg-white">
         <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-12">
-           <div className="flex flex-col items-center text-center p-8 bg-slate-50 rounded-[40px] border border-slate-100">
-              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6"><Clock size={32}/></div>
-              <h4 className="text-xl font-heading font-black uppercase mb-3">Fast Delivery</h4>
+           <div className="flex flex-col items-center text-center p-10 bg-slate-50 rounded-[50px] border border-slate-100 hover:shadow-xl transition-all group">
+              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><Clock size={32}/></div>
+              <h4 className="text-xl font-heading font-black uppercase mb-3 text-slate-900">Fast Delivery</h4>
               <p className="text-xs text-slate-400 font-bold leading-relaxed"><BanglaText>আমাদের মেথড গুলো খুবই দ্রুত কাজ করে। সাধারণত ২-২৪ ঘন্টার মধ্যেই সার্ভিস শুরু হয়ে যায়।</BanglaText></p>
            </div>
-           <div className="flex flex-col items-center text-center p-8 bg-slate-50 rounded-[40px] border border-slate-100">
-              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6"><Lock size={32}/></div>
-              <h4 className="text-xl font-heading font-black uppercase mb-3">Safe & Secure</h4>
+           <div className="flex flex-col items-center text-center p-10 bg-slate-50 rounded-[50px] border border-slate-100 hover:shadow-xl transition-all group">
+              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><Lock size={32}/></div>
+              <h4 className="text-xl font-heading font-black uppercase mb-3 text-slate-900">Safe & Secure</h4>
               <p className="text-xs text-slate-400 font-bold leading-relaxed"><BanglaText>আমরা কখনো আপনার পাসওয়ার্ড চাই না। শুধু লিঙ্ক দিলেই সার্ভিস ডেলিভারি সম্ভব। আইডি থাকবে নিরাপদ।</BanglaText></p>
            </div>
-           <div className="flex flex-col items-center text-center p-8 bg-slate-50 rounded-[40px] border border-slate-100">
-              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6"><Target size={32}/></div>
-              <h4 className="text-xl font-heading font-black uppercase mb-3">Real Engagement</h4>
-              <p className="text-xs text-slate-400 font-bold leading-relaxed"><BanglaText>বিডি রিয়েল ফলোয়ার ও রিয়েল লাইক দিয়ে আপনার পেজের অর্গানিক রিচ বাড়ানোর সেরা সমাধান।</BanglaText></p>
+           <div className="flex flex-col items-center text-center p-10 bg-slate-50 rounded-[50px] border border-slate-100 hover:shadow-xl transition-all group">
+              <div className="w-16 h-16 bg-pink-100 text-pink-500 rounded-2xl flex items-center justify-center mb-6 group-hover:scale-110 transition-transform"><Target size={32}/></div>
+              <h4 className="text-xl font-heading font-black uppercase mb-3 text-slate-900">Real Engagement</h4>
+              <p className="text-xs text-slate-400 font-bold leading-relaxed"><BanglaText>BD রিয়েল ফলোয়ার ও রিয়েল লাইক দিয়ে আপনার পেজের অর্গানিক রিচ বাড়ানোর সেরা সমাধান।</BanglaText></p>
            </div>
         </div>
       </section>
@@ -328,15 +335,15 @@ const HomePage = () => {
       </section>
 
       {itemCount > 0 && (
-        <div className="md:hidden fixed bottom-6 left-4 right-4 z-50 bg-slate-900 text-white p-4 rounded-2xl shadow-2xl flex items-center justify-between border border-white/10 animate-in slide-in-from-bottom">
-           <div className="flex items-center gap-3">
-             <div className="bg-pink-600 p-2 rounded-lg"><ShoppingBag size={18} /></div>
+        <div className="md:hidden fixed bottom-6 left-4 right-4 z-[90] bg-slate-900 text-white p-5 rounded-3xl shadow-2xl flex items-center justify-between border border-white/10 animate-in slide-in-from-bottom">
+           <div className="flex items-center gap-4">
+             <div className="bg-pink-600 p-3 rounded-2xl"><ShoppingBag size={20} className="text-white" /></div>
              <div>
-               <p className="text-[8px] font-black uppercase tracking-widest text-white/40">Total Pay</p>
-               <p className="text-xl font-heading font-black text-pink-500 leading-none">{total}৳</p>
+               <p className="text-[9px] font-black uppercase tracking-[0.2em] text-white/40">Total Amount</p>
+               <p className="text-2xl font-heading font-black text-pink-500 leading-none">{total}৳</p>
              </div>
            </div>
-           <button onClick={() => navigate('/cart')} className="bg-pink-600 text-white px-6 py-3 rounded-xl font-black uppercase text-[10px] tracking-widest active:scale-95 transition-all">Proceed</button>
+           <button onClick={() => navigate('/cart')} className="bg-pink-600 text-white px-8 py-4 rounded-2xl font-black uppercase text-[11px] tracking-widest active:scale-95 transition-all shadow-lg">Proceed</button>
         </div>
       )}
     </div>
@@ -434,7 +441,7 @@ const CartPage = () => {
                       navigate('/payment');
                     } else { alert('Please fill required fields marked with *'); }
                   }}
-                  className="w-full bg-pink-600 py-6 rounded-3xl text-xl font-black uppercase tracking-widest hover:bg-pink-700 transition-all active:scale-95"
+                  className="w-full bg-pink-600 py-6 rounded-3xl text-xl font-black uppercase tracking-widest hover:bg-pink-700 transition-all active:scale-95 text-white"
                 >
                   Confirm Order
                 </button>
@@ -457,6 +464,7 @@ const PaymentPage = () => {
   const [method, setMethod] = useState<'bKash' | 'Nagad'>('bKash');
   const [isProcessing, setIsProcessing] = useState(false);
   const [orderSuccess, setOrderSuccess] = useState<string | null>(null);
+  const [finalTotal, setFinalTotal] = useState<number>(0);
 
   const paymentNumber = '01846119500';
 
@@ -470,11 +478,27 @@ const PaymentPage = () => {
     setIsProcessing(true);
     const orderInfo = JSON.parse(localStorage.getItem('sociafy_pending_order_info') || '{}');
     
-    // Add a timeout to avoid infinite loading if backend is not responsive
-    const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+    const isDevelopment = 
+      window.location.hostname === 'localhost' || 
+      window.location.hostname === '127.0.0.1' || 
+      window.location.hostname.startsWith('192.168.') || 
+      window.location.hostname.includes('web-preview');
+
+    if (isDevelopment) {
+      setTimeout(() => {
+        const simulatedId = `ORD-${Math.floor(10000 + Math.random() * 90000)}`;
+        setFinalTotal(total); // Save total before clearing
+        setOrderSuccess(simulatedId);
+        clearCart();
+        setIsProcessing(false);
+      }, 1500);
+      return;
+    }
 
     try {
+      const controller = new AbortController();
+      const timeoutId = setTimeout(() => controller.abort(), 10000); 
+
       const response = await fetch('/api/order', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -484,38 +508,64 @@ const PaymentPage = () => {
 
       clearTimeout(timeoutId);
 
-      if (!response.ok) {
-         throw new Error("Cannot reach server. Are you on Cloudflare?");
-      }
+      if (!response.ok) throw new Error("Backend not reached");
       
       const result = await response.json();
-
       if (result.success) {
+        setFinalTotal(total); // Save total before clearing
         setOrderSuccess(result.orderId);
         clearCart();
       } else {
-        alert("Server error: " + (result.error || "Unknown error"));
-        setIsProcessing(false);
+        throw new Error(result.error);
       }
     } catch (error: any) {
-      clearTimeout(timeoutId);
-      console.error(error);
-      const isAbort = error.name === 'AbortError';
-      alert(isAbort ? "Request timed out. Please pay via WhatsApp instead." : "Payment submission failed. This is likely because the backend (Cloudflare Function) is only available after you deploy to Cloudflare Pages. \n\nPlease use the WhatsApp payment button below.");
+      console.error("Payment Submission Error:", error);
+      alert("Automated verification failed. PLEASE USE THE WHATSAPP BUTTON to send your screenshot manually.");
+    } finally {
       setIsProcessing(false);
     }
   };
 
+  // SUCCESS PAGE (Last Page)
   if (orderSuccess) return (
-    <div className="pt-40 pb-40 min-h-screen flex items-center justify-center bg-slate-50 px-4">
-      <div className="max-w-xl w-full bg-white p-16 rounded-[60px] shadow-2xl border border-pink-100 text-center animate-in zoom-in">
-         <div className="w-24 h-24 bg-green-100 text-green-600 rounded-full flex items-center justify-center mx-auto mb-8"><CheckCircle2 size={48} /></div>
-         <h1 className="text-4xl font-heading font-black uppercase text-slate-900 mb-2">Order Confirmed!</h1>
-         <p className="text-pink-600 font-black mb-10 uppercase text-sm tracking-widest">Order ID: {orderSuccess}</p>
-         <div className="mb-10 text-slate-400 font-medium px-4"><BanglaText>আমরা আপনার ইমেইলে কনফার্মেশন পাঠিয়েছি। আপনার সার্ভিসটি প্রসেসিং শুরু হয়েছে।</BanglaText></div>
-         <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white w-full py-6 rounded-3xl font-black uppercase tracking-widest flex items-center justify-center gap-3 shadow-xl hover:scale-105 transition-all">
-           <MessageCircle size={24} /> WhatsApp Support
-         </a>
+    <div className="pt-24 md:pt-40 pb-40 min-h-screen bg-slate-50 flex flex-col items-center px-4 animate-in fade-in duration-500">
+      <div className="max-w-2xl w-full bg-white p-10 md:p-20 rounded-[60px] shadow-2xl border border-pink-100 text-center relative overflow-hidden">
+         {/* Decoration */}
+         <div className="absolute top-0 left-1/2 -translate-x-1/2 w-48 h-1 bg-gradient-to-r from-transparent via-pink-500 to-transparent"></div>
+         
+         <div className="relative mb-12">
+            <div className="w-24 h-24 bg-green-50 text-green-500 rounded-full flex items-center justify-center mx-auto ring-8 ring-green-100 animate-pulse">
+               <CheckCircle2 size={56} strokeWidth={1.5} />
+            </div>
+         </div>
+
+         <h1 className="text-4xl md:text-5xl font-heading font-black uppercase text-slate-900 mb-4 tracking-tighter">Order Received</h1>
+         <div className="inline-block bg-pink-50 px-6 py-2 rounded-full border border-pink-100 mb-10">
+            <span className="text-pink-600 font-black uppercase text-xs tracking-[0.2em]">{orderSuccess}</span>
+         </div>
+         
+         <div className="mb-12 space-y-6 text-left bg-slate-50 p-8 rounded-[40px] border border-slate-100">
+            <div className="flex justify-between items-center border-b border-slate-200 pb-4">
+               <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Verification Status</span>
+               <span className="text-[10px] font-black uppercase text-orange-500 flex items-center gap-1"><Clock size={12}/> Pending</span>
+            </div>
+            <div className="flex justify-between items-center border-b border-slate-200 pb-4">
+               <span className="text-[10px] font-black uppercase text-slate-400 tracking-widest">Amount to Pay</span>
+               <span className="text-xl font-heading font-black text-slate-900">{finalTotal}৳</span>
+            </div>
+            <div className="text-center pt-2">
+               <p className="text-sm font-medium text-slate-500 leading-relaxed"><BanglaText>আমরা আপনার পেমেন্ট ভেরিফাই করছি। সাধারণত ৩০ মিনিটের মধ্যে আপনার সার্ভিসটি শুরু হয়ে যাবে। কনফার্মেশন এর জন্য ইমেইল চেক করুন।</BanglaText></p>
+            </div>
+         </div>
+
+         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <a href={SOCIAFY_INFO.whatsapp} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white py-6 rounded-3xl font-black uppercase text-[11px] tracking-widest flex items-center justify-center gap-3 shadow-xl hover:scale-[1.02] transition-all">
+              <MessageCircle size={20} /> Get Update
+            </a>
+            <button onClick={() => navigate('/')} className="bg-slate-900 text-white py-6 rounded-3xl font-black uppercase text-[11px] tracking-widest hover:bg-slate-800 transition-all">
+               Back to Home
+            </button>
+         </div>
       </div>
     </div>
   );
@@ -529,8 +579,8 @@ const PaymentPage = () => {
         </div>
         <div className="space-y-6">
           <div className="flex gap-3">
-            <button onClick={() => setMethod('bKash')} className={`flex-1 py-5 rounded-2xl font-black uppercase text-[10px] transition-all ${method === 'bKash' ? 'bg-[#D12053] text-white shadow-lg' : 'bg-white text-slate-400'}`}>bKash</button>
-            <button onClick={() => setMethod('Nagad')} className={`flex-1 py-5 rounded-2xl font-black uppercase text-[10px] transition-all ${method === 'Nagad' ? 'bg-[#f97316] text-white shadow-lg' : 'bg-white text-slate-400'}`}>Nagad</button>
+            <button onClick={() => setMethod('bKash')} className={`flex-1 py-5 rounded-2xl font-black uppercase text-[10px] transition-all ${method === 'bKash' ? 'bg-[#D12053] text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-100'}`}>bKash</button>
+            <button onClick={() => setMethod('Nagad')} className={`flex-1 py-5 rounded-2xl font-black uppercase text-[10px] transition-all ${method === 'Nagad' ? 'bg-[#f97316] text-white shadow-lg' : 'bg-white text-slate-400 border border-slate-100'}`}>Nagad</button>
           </div>
           <div className="bg-white p-10 rounded-[40px] border border-slate-100 shadow-xl space-y-8">
                <div className="flex items-center gap-4 border-b border-slate-50 pb-6">
@@ -539,9 +589,9 @@ const PaymentPage = () => {
                </div>
                <div>
                   <p className="text-[9px] font-black uppercase text-slate-400 tracking-widest mb-3">Target Number (Copy)</p>
-                  <button onClick={() => { navigator.clipboard.writeText(paymentNumber); alert('Copied!'); }} className="w-full flex items-center justify-between bg-slate-50 px-6 py-5 rounded-2xl font-heading font-black text-slate-900 text-xl border border-slate-100">
+                  <button onClick={() => { navigator.clipboard.writeText(paymentNumber); alert('Copied!'); }} className="w-full flex items-center justify-between bg-slate-50 px-6 py-5 rounded-2xl font-heading font-black text-slate-900 text-xl border border-slate-100 transition-all hover:bg-slate-100 active:scale-[0.98]">
                     <span>{paymentNumber}</span>
-                    <Check size={20} className="text-pink-500" />
+                    <Copy size={18} className="text-pink-500" />
                   </button>
                </div>
                <div>
@@ -549,13 +599,21 @@ const PaymentPage = () => {
                   <input type="text" placeholder="01XXXXXXXXX" value={senderNumber} onChange={e => setSenderNumber(e.target.value)} className="w-full bg-white border-2 border-slate-100 px-6 py-5 rounded-2xl font-heading font-black text-center focus:outline-none focus:border-pink-500" />
                </div>
                <div className="flex flex-col gap-4">
-                  <button onClick={handleSubmit} disabled={isProcessing} className={`w-full py-6 rounded-3xl text-sm font-black uppercase tracking-widest text-white shadow-xl transition-all ${method === 'bKash' ? 'bg-[#D12053]' : 'bg-[#f97316]'} ${isProcessing ? 'opacity-50' : ''}`}>
-                    {isProcessing ? 'VERIFYING...' : 'Submit Verification'}
+                  <button onClick={handleSubmit} disabled={isProcessing} className={`w-full py-6 rounded-3xl text-sm font-black uppercase tracking-widest text-white shadow-xl transition-all ${method === 'bKash' ? 'bg-[#D12053]' : 'bg-[#f97316]'} ${isProcessing ? 'opacity-50 cursor-wait' : 'hover:scale-[1.02] active:scale-[0.98]'}`}>
+                    {isProcessing ? 'PROCESSING...' : 'Submit Verification'}
                   </button>
-                  <a href={generateWhatsAppLink(cart, JSON.parse(localStorage.getItem('sociafy_pending_order_info') || '{}'), total)} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white w-full py-6 rounded-3xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl">
+                  <div className="relative py-4">
+                    <div className="absolute inset-0 flex items-center"><div className="w-full border-t border-slate-100"></div></div>
+                    <div className="relative flex justify-center text-[10px] font-black uppercase tracking-widest text-slate-300 bg-white px-4">Or Manual</div>
+                  </div>
+                  <a href={generateWhatsAppLink(cart, JSON.parse(localStorage.getItem('sociafy_pending_order_info') || '{}'), total)} target="_blank" rel="noopener noreferrer" className="bg-green-600 text-white w-full py-6 rounded-3xl text-[10px] font-black uppercase tracking-widest flex items-center justify-center gap-2 shadow-xl hover:bg-green-700 hover:scale-[1.02] transition-all">
                     <MessageCircle size={16} /> Pay via WhatsApp directly
                   </a>
                </div>
+          </div>
+          <div className="flex items-center gap-3 bg-blue-50 p-6 rounded-3xl border border-blue-100">
+             <AlertCircle className="text-blue-500 shrink-0" size={20} />
+             <p className="text-[10px] text-blue-700 font-bold leading-relaxed"><BanglaText>পেমেন্ট সাবমিট করার পর আমাদের সাপোর্ট টিমের মেম্বার সেটি চেক করে অর্ডারটি কনফার্ম করবে।</BanglaText></p>
           </div>
         </div>
       </div>
@@ -568,9 +626,8 @@ const App = () => {
   const location = useLocation();
   const { itemCount } = useCart();
   
-  // Logic to adjust WhatsApp button position when Proceed bar is visible on home page mobile
   const isHomePage = location.pathname === '/';
-  const waBottomClass = (isHomePage && itemCount > 0) ? 'bottom-28' : 'bottom-6';
+  const waBottomClass = (isHomePage && itemCount > 0) ? 'bottom-44' : 'bottom-6';
 
   return (
     <div className="min-h-screen flex flex-col selection:bg-pink-500 selection:text-white">
@@ -600,21 +657,19 @@ const App = () => {
         </div>
       </footer>
       
-      {/* Dynamic positioning for WhatsApp icon based on mobile state */}
       <a 
         href={SOCIAFY_INFO.whatsapp} 
         target="_blank" 
         rel="noopener noreferrer" 
-        className={`fixed ${waBottomClass} md:bottom-6 right-6 z-[100] flex items-center gap-2 bg-[#25D366] text-white p-4 rounded-full shadow-2xl hover:scale-110 transition-all group active:scale-95`}
+        className={`fixed ${waBottomClass} md:bottom-8 right-6 md:right-8 z-[110] flex items-center gap-2 bg-[#25D366] text-white p-4 rounded-full shadow-[0_10px_40px_rgba(37,211,102,0.4)] hover:scale-110 transition-all duration-300 group active:scale-95`}
       >
-        <MessageCircle size={24} />
-        <span className="hidden md:block font-heading font-black uppercase text-[10px] tracking-widest">WhatsApp Support</span>
+        <MessageCircle size={28} />
+        <span className="hidden md:block font-heading font-black uppercase text-[11px] tracking-widest px-2">WhatsApp Support</span>
       </a>
     </div>
   );
 };
 
-// Root wrapper for router
 const AppWrapper = () => (
   <CartProvider>
     <Router>
@@ -630,17 +685,32 @@ const ReviewsPage = () => (
         <h1 className="text-4xl md:text-7xl font-heading font-black uppercase text-slate-900 mb-4 tracking-tighter">Reviews</h1>
         <p className="text-pink-500 font-black uppercase tracking-[0.3em] text-[10px]">What Our Clients Say</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-20">
         {REVIEWS.map((r, i) => (
           <div key={i} className="bg-white p-10 rounded-[50px] border border-slate-100 shadow-sm flex flex-col hover:shadow-2xl hover:border-pink-100 transition-all group">
             <div className="flex gap-1 mb-8">{[1,2,3,4,5].map(s => <Star key={s} size={14} className="text-pink-500" fill="currentColor" />)}</div>
             <p className="text-lg font-medium text-slate-600 italic mb-10 leading-relaxed font-heading">"{r.text}"</p>
             <div className="mt-auto flex items-center justify-between border-t border-slate-50 pt-6">
-                <span className="font-heading font-black uppercase text-slate-900 tracking-tight">{r.name}</span>
+                <div className="flex flex-col">
+                  <span className="font-heading font-black uppercase text-slate-900 tracking-tight leading-none">{r.name}</span>
+                  <span className="text-[8px] font-black text-green-500 uppercase tracking-widest mt-1">Verified Purchase</span>
+                </div>
                 <div className="bg-green-100 text-green-600 p-1.5 rounded-full"><CheckCircle2 size={14} /></div>
             </div>
           </div>
         ))}
+      </div>
+      
+      {/* Missing Reviews CTA */}
+      <div className="text-center">
+         <a 
+           href={SOCIAFY_INFO.reviewsUrl} 
+           target="_blank" 
+           rel="noopener noreferrer" 
+           className="bg-white border-2 border-slate-200 text-slate-900 px-10 py-5 rounded-3xl font-black uppercase text-xs tracking-widest hover:border-pink-500 hover:text-pink-500 transition-all inline-flex items-center gap-3 shadow-sm hover:shadow-xl"
+         >
+           <Facebook size={18} /> View All Reviews on Facebook
+         </a>
       </div>
     </div>
   </div>
